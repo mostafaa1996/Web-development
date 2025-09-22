@@ -6,7 +6,7 @@ const InitialGameBoard = [
   ["", "", ""],
 ];
 
-export default function GameBoard() {
+export default function GameBoard({ TogglePlayer, SelectedPlayer }) {
   const [board, SetBoard] = useState(InitialGameBoard);
 
   function handleClick(row, col) {
@@ -14,11 +14,11 @@ export default function GameBoard() {
     SetBoard((prevBoard) => {
       let newBoard = [...prevBoard.map((r) => [...r])]; // Create a copy of the board
       if (newBoard[row][col] === "") {
-        newBoard[row][col] = "X"; // Example: place an "X" in the clicked cell
-        // Update the GameBoard state here if using useState
+        newBoard[row][col] = SelectedPlayer;
       }
       return newBoard; // Return the updated board (for demonstration purposes
     });
+    TogglePlayer(); // Call the function passed from App to toggle the player
   }
   return (
     <ol id="game-board">
