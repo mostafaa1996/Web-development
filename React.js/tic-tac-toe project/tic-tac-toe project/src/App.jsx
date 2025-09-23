@@ -1,12 +1,25 @@
 import { useState } from "react";
 import Player from "./Components/player";
 import GameBoard from "./Components/GameBoard";
+import Log from "./Components/Log";
 
 function App() {
   const [selectedPlayer, SetSelectedPlayer] = useState("X");
+  const [gameTurns, SetGameTurns] = useState([]);
 
-  function togglePlayer() {
+  function togglePlayer(rowIndex, colIndex) {
     SetSelectedPlayer((prevPlayer) => (prevPlayer === "X" ? "O" : "X"));
+    SetGameTurns((prevTurns) => {
+      let currentPlayer = "X";
+      if (prevTurns.length > 0) {
+        currentPlayer =
+          prevTurns[prevTurns.length - 1].player === "X" ? "O" : "X";
+      }
+      return [
+        ...prevTurns,
+        { player: currentPlayer, position: [rowIndex, colIndex] },
+      ];
+    });
   }
 
   return (
@@ -18,11 +31,9 @@ function App() {
           <Player name="Player 1" symbol="X" SelectedPlayer={selectedPlayer} />
           <Player name="Player 2" symbol="O" SelectedPlayer={selectedPlayer} />
         </ol>
-        <GameBoard
-          TogglePlayer={togglePlayer}
-          SelectedPlayer={selectedPlayer}
-        />
+        <GameBoard TogglePlayer={togglePlayer} GameTurns={gameTurns} />
       </div>
+      <Log gameTurns={gameTurns} />
     </main>
   );
 }
