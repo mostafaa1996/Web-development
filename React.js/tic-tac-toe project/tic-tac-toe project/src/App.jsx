@@ -4,11 +4,9 @@ import GameBoard from "./Components/GameBoard";
 import Log from "./Components/Log";
 
 function App() {
-  const [selectedPlayer, SetSelectedPlayer] = useState("X");
   const [gameTurns, SetGameTurns] = useState([]);
-
+  const selectedPlayer = gameTurns.length % 2 === 0 ? "X" : "O";
   function togglePlayer(rowIndex, colIndex) {
-    SetSelectedPlayer((prevPlayer) => (prevPlayer === "X" ? "O" : "X"));
     SetGameTurns((prevTurns) => {
       let currentPlayer = "X";
       if (prevTurns.length > 0) {

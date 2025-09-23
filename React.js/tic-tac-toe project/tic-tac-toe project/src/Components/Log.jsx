@@ -7,5 +7,5 @@ export default function Log({ gameTurns }) {
       </li>
     );
   });
-  return <ol id="log">{logEntries.reverse()}</ol>;
+  return <ol id="log">{logEntries}</ol>;
 }
