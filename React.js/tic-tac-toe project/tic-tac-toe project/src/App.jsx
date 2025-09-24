@@ -8,6 +8,11 @@ import GameOver from "./Components/GameOver";
 
 function App() {
   const [gameTurns, SetGameTurns] = useState([]);
+  const [PlayersNameObj, SetPlayerName] = useState({
+    X: "Player 1",
+    O: "Player 2",
+  });
+
   const selectedPlayer = gameTurns.length % 2 === 0 ? "X" : "O";
   const winnerPlayer = DetectWinner(gameTurns);
   const drawState = DetectDrawState(gameTurns, winnerPlayer);
@@ -26,17 +31,34 @@ function App() {
     });
   }
 
+  function updatePlayerName(name, symbol) {
+    SetPlayerName((prevNames) => ({
+      ...prevNames,
+      [symbol]: name,
+    }));
+  }
+
   return (
     <main>
       <div id="game-container">
         {/* Game components will go here */}
         <ol id="players" className="highlight-player">
           {/* Move list items will go here */}
-          <Player name="Player 1" symbol="X" SelectedPlayer={selectedPlayer} />
-          <Player name="Player 2" symbol="O" SelectedPlayer={selectedPlayer} />
+          <Player
+            name="Player 1"
+            symbol="X"
+            SelectedPlayer={selectedPlayer}
+            onChangeNames={updatePlayerName}
+          />
+          <Player
+            name="Player 2"
+            symbol="O"
+            SelectedPlayer={selectedPlayer}
+            onChangeNames={updatePlayerName}
+          />
         </ol>
         {winnerPlayer.winner || drawState.isDraw ? (
-          <GameOver winner={winnerPlayer.winner} />
+          <GameOver winner={winnerPlayer.winner} Players= {PlayersNameObj}  />
         ) : null}
         <GameBoard GameUpdate={gameUpdater} GameTurns={gameTurns} />
       </div>
