@@ -1,20 +1,11 @@
-export default function GameBoard({ TogglePlayer, GameTurns }) {
-  const gameBoard = GameTurns.reduce(
-    (board, turn) => {
-      const [row, col] = turn.position;
-      board[row][col] = turn.player;
-      return board;
-    },
-    [
-      ["", "", ""],
-      ["", "", ""],
-      ["", "", ""],
-    ]
-  );
+import BoardDataTrackerBuild from "../BoardDataTracker";
+
+export default function GameBoard({ GameUpdate, GameTurns }) {
+  const gameBoard = BoardDataTrackerBuild({ gameTurns: GameTurns });
 
   function handleClick(rowIndex, colIndex) {
     if (gameBoard[rowIndex][colIndex] === "") {
-      TogglePlayer(rowIndex, colIndex);
+      GameUpdate(rowIndex, colIndex);
     }
   }
 
