@@ -1,5 +1,5 @@
 export default function Log({ gameTurns }) {
-  const logEntries = [...gameTurns].reverse().map((turn, index) => {
+  const logEntries = gameTurns.map((turn, index) => {
     const { player, position } = turn;
     return (
       <li key={index}>
@@ -7,5 +7,5 @@ export default function Log({ gameTurns }) {
       </li>
     );
   });
-  return <ol id="log">{logEntries}</ol>;
+  return <ol id="log">{logEntries.reverse()}</ol>;
 }
