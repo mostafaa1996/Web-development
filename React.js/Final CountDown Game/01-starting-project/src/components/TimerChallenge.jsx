@@ -2,29 +2,40 @@ import { useRef, useState } from "react";
 import Result from "./result.jsx";
 
 export default function TimerChallenge({ title, targetTime }) {
-  const [timeExpired, SetTimeExpired] = useState(false);
-  const [challengeIsRunning, SetChallengeIsRunning] = useState(false);
+  const [timeLeft, SetTimeLeft] = useState(targetTime * 1000);
   const Dialog = useRef(null);
-
   const timer = useRef(null);
-  function HandleClickButtonAtStart() {
-    timer.current = setTimeout(() => {
-      SetTimeExpired(true);
-      SetChallengeIsRunning(false);
-      Dialog.current.open();
-    }, targetTime * 1000);
 
-    SetChallengeIsRunning(true);
+  const timerIsActive = timeLeft < targetTime * 1000 && timeLeft > 0;
+
+  if (timeLeft <= 0) {
+    clearInterval(timer.current);
+    Dialog.current.open();
+  }
+
+  function ResetTimeLeft()  {
+    SetTimeLeft(targetTime * 1000);
+  }
+
+  function HandleClickButtonAtStart() {
+    timer.current = setInterval(() => {
+      SetTimeLeft((prevtimeLeft) => prevtimeLeft - 10);
+    }, 10);
   }
 
   function HandleClickButtonAtStop() {
-    clearTimeout(timer.current);
-    SetChallengeIsRunning(false);
+    clearInterval(timer.current);
+    Dialog.current.open();
   }
 
   return (
     <>
-      <Result ref= {Dialog} result="You Lost" targetTime={targetTime} />
+      <Result
+        ref={Dialog}
+        targetTime={targetTime}
+        RemainingTime={timeLeft}
+        onOpen={ResetTimeLeft}
+      />
       <section className="challenge">
         <h2>{title}</h2>
         <p className="challenge-time">
@@ -33,16 +44,14 @@ export default function TimerChallenge({ title, targetTime }) {
         <p>
           <button
             onClick={
-              challengeIsRunning
-                ? HandleClickButtonAtStop
-                : HandleClickButtonAtStart
+              timerIsActive ? HandleClickButtonAtStop : HandleClickButtonAtStart
             }
           >
-            {challengeIsRunning ? "Stop challenge" : "Start challenge"}
+            {timerIsActive ? "Stop challenge" : "Start challenge"}
           </button>
         </p>
-        <p className={challengeIsRunning ? "active" : undefined}>
-          {challengeIsRunning ? "Time is running" : "Time is inactive"}
+        <p className={timerIsActive ? "active" : undefined}>
+          {timerIsActive ? "Time is running" : "Time is inactive"}
         </p>
       </section>
     </>
