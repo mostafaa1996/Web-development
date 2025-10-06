@@ -2,6 +2,7 @@ import { useState } from "react";
 import ProjectSidebar from "./components/ProjectSidebar";
 import NewProject from "./components/NewProject";
 import NoProjectSelected from "./components/NoProjectSelected";
+import SelectedProject from "./components/SelectedProject";
 
 function App() {
   let content;
@@ -20,6 +21,12 @@ function App() {
     }));
   }
 
+  /*************  ✨ Windsurf Command ⭐  *************/
+  /**
+   * Callback function to save a new project.
+   * @param {Function} projectDetailsCallback - a function that returns the project details.
+
+/*******  696099d1-eb1a-4e96-9e33-08d90bb750fa  *******/
   function onSaveProject(projectDetailsCallback) {
     const projectDetails = projectDetailsCallback();
     if (projectDetails === undefined) return;
@@ -43,6 +50,59 @@ function App() {
       selectedProjectId: projectId,
     }));
   }
+
+  function handleDeleteProject() {
+    setProjectsState((prevState) => ({
+      ...prevState,
+      selectedProjectId: undefined,
+      projects: prevState.projects.filter(
+        (project) => project.id !== prevState.selectedProjectId
+      ),
+    }));
+  }
+
+  function handleAddTaskToProject(TaskDetails) {
+    let Task = {
+      id: Date.now() + Math.floor(Math.random() * 1000001),
+      text: TaskDetails,
+    };
+    setProjectsState((prevState) => ({
+      ...prevState,
+      projects: prevState.projects.map((project) => {
+        if (project.id === prevState.selectedProjectId) {
+          return {
+            ...project,
+            tasks: [...project.tasks, Task],
+          };
+        }
+        return project;
+      }),
+    }));
+  }
+
+  function handleDeleteTaskFromProject(taskId) {
+    setProjectsState((prevState) => ({
+      ...prevState,
+      projects: prevState.projects.map((project) => {
+        if (project.id === prevState.selectedProjectId) {
+          project.tasks = project.tasks.filter((task) => task.id !== taskId);
+        }
+        return project;
+      }),
+    }));
+  }
+
+  let SelectedProjectElement = projectsState.projects.find(
+    (project) => project.id === projectsState.selectedProjectId
+  );
+  content = (
+    <SelectedProject
+      project={SelectedProjectElement}
+      onDeletingProject={handleDeleteProject}
+      onAddingTask={handleAddTaskToProject}
+      onDeletingTask={handleDeleteTaskFromProject}
+    />
+  );
 
   if (projectsState.selectedProjectId === null) {
     content = (

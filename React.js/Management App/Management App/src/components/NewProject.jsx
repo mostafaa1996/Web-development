@@ -33,6 +33,7 @@ export default function NewProject({ onSaveProject , onCancellation }) {
       description: descriptionVal,
       dueDate: dueDateVal,
       id: Math.floor(Math.random() * 1000001), //id range: 0 to 1000000
+      tasks: [],
     };
   }
 
