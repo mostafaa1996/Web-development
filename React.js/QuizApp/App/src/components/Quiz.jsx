@@ -1,6 +1,7 @@
 import Question from "./question";
 import QuizBar from "./QuizBar";
 import Answer from "./answer";
+import ConfirmButton from "./ConfirmButton";
 
 export default function Quiz() {
   return (
@@ -12,6 +13,7 @@ export default function Quiz() {
         <Answer choice="A library to build user interfaces with help of declarative code." />
         <Answer choice="A library to build user interfaces with help of declarative code." />
         <Answer choice="A library to build user interfaces with help of declarative code." />
+        <ConfirmButton/>
       </section>
     </div>
   );
