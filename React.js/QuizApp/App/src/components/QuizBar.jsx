@@ -4,8 +4,10 @@ export default function QuizBar({ Time_InSeconds }) {
     Time_InSeconds * 1000,
   );
 
-  const cssClassesOfOuterDiv = "w-[70%] bg-[rgba(12,5,32,0.6)] items-center justify-center rounded-full h-2 ml-2 overflow-hidden inline-block" ;
-  const cssClassesOfinnerDiv = "bg-[#9082a3] h-2 rounded-full transition-all duration-300" ; 
+  const cssClassesOfOuterDiv =
+    "w-[90%] bg-[rgba(12,5,32,0.6)] rounded-full h-2 ml-2 overflow-hidden mb-1";
+  const cssClassesOfinnerDiv =
+    "bg-[#9082a3] h-2 rounded-full transition-all duration-300";
   const TimeRunning = TimeUpdatedValue / 1000; //TimeRunning in seconds
 
   useEffect(() => {
@@ -20,10 +22,8 @@ export default function QuizBar({ Time_InSeconds }) {
   // not applicable at tailwind..
   //cssClassesOfinnerDiv += ` w-[${(TimeRunning / Time_InSeconds) * 100}%]`;
   return (
-    <div className="w-[30%] h-auto">
-      <label className="w-12 text-2xl mr-2">
-        {TimeRunning}
-      </label>
+    <div className="flex items-center flex-row justify-center w-[60%] h-auto">
+      <label className="w-5 text-base text-right">{TimeRunning}</label>
       <div className={cssClassesOfOuterDiv}>
         <div
           className={cssClassesOfinnerDiv}
