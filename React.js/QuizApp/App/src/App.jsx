@@ -1,7 +1,14 @@
-import QuizBar from "./components/QuizBar";
+import Header from "./components/header";
+import Quiz from "./components/Quiz";
+
 
 function App() {
-  return <QuizBar Time_InSeconds={25} />;
+  return (
+    <>
+      <Header/>
+      <Quiz />
+    </>
+  );
 }
 
 export default App;
