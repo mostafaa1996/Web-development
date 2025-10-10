@@ -1,11 +1,10 @@
 import Header from "./components/header";
 import Quiz from "./components/Quiz";
 
-
 function App() {
   return (
     <>
-      <Header/>
+      <Header />
       <Quiz />
     </>
   );

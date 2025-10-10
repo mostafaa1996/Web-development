@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-export default function QuizBar({ Time_InSeconds }) {
+export default function QuizBar({ Time_InSeconds, currentQuestion , onTimeEnd }) {
   const [TimeUpdatedValue, setTimeUpdatedValue] = useState(
-    Time_InSeconds * 1000,
+    Time_InSeconds * 1000
   );
 
   const cssClassesOfOuterDiv =
@@ -13,12 +13,15 @@ export default function QuizBar({ Time_InSeconds }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setTimeUpdatedValue((prevValue) => {
-        if (prevValue === 0) return 0;
+        if (prevValue === 0) onTimeEnd();
         return prevValue - 1000;
       });
     }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+    return () => {
+      clearInterval(interval);
+      setTimeUpdatedValue(Time_InSeconds * 1000);
+    };
+  }, [currentQuestion.id]);
   // not applicable at tailwind..
   //cssClassesOfinnerDiv += ` w-[${(TimeRunning / Time_InSeconds) * 100}%]`;
   return (
