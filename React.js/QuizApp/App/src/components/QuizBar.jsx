@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
-export default function QuizBar({ Time_InSeconds, currentQuestion , onTimeEnd }) {
+export default function QuizBar({
+  Time_InSeconds,
+  currentQuestion,
+  onTimeEnd,
+}) {
   const [TimeUpdatedValue, setTimeUpdatedValue] = useState(
-    Time_InSeconds * 1000
+    Time_InSeconds * 1000,
   );
 
   const cssClassesOfOuterDiv =

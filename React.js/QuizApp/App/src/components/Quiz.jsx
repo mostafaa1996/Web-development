@@ -10,11 +10,12 @@ import useAnswers from "../answersProvider";
 import DecisionReducer from "../DecisionReducer";
 
 export default function Quiz() {
-  const { SetAnswer, ReadAnswer, SetSkipped, ReadSkipped } = useAnswers();
+  const { SetAnswer, SetSkipped } = useAnswers();
 
   const [currentQuestion, setCurrentQuestion] = useState({
     id: questions[0].id,
     question: questions[0].text,
+    rightAnswer: questions[0].rightAnswer,
   });
 
   const [Decision, dispatch] = useReducer(DecisionReducer, {
@@ -26,7 +27,6 @@ export default function Quiz() {
 
   let MyQuestion = useRef(null);
 
-  
   function handleConfirm(choice) {
     dispatch({ type: "Confirm", payload: { choice: choice } });
   }
@@ -40,7 +40,7 @@ export default function Quiz() {
   }
   function NextQuestion() {
     const currentIndex = questions.findIndex(
-      (question) => question.id === currentQuestion.id
+      (question) => question.id === currentQuestion.id,
     );
     const nextIndex = currentIndex + 1;
     if (nextIndex === questions.length) {
@@ -50,6 +50,7 @@ export default function Quiz() {
       ...prevQuestion,
       id: questions[nextIndex].id,
       question: questions[nextIndex].text,
+      rightAnswer: questions[nextIndex].rightAnswer,
     }));
   }
 
@@ -59,8 +60,9 @@ export default function Quiz() {
     if (Decision.confirmed) {
       let answerObject = {
         id: currentQuestion.id,
-        question: currentQuestion.text,
+        question: currentQuestion.question,
         answer: Decision.answer,
+        rightAnswer: currentQuestion.rightAnswer,
       };
       SetAnswer(answerObject);
     } else if (Decision.skipped === true) {
@@ -76,7 +78,11 @@ export default function Quiz() {
     <div className="flex flex-col items-center justify-center">
       <section className="flex flex-col gap-3 items-center justify-center w-[50%] h-auto bg-[#291C4A] rounded-3xl py-8">
         <Question question={MyQuestion} />
-        <QuizBar Time_InSeconds={25} currentQuestion={currentQuestion} onTimeEnd={handleSkip} />
+        <QuizBar
+          Time_InSeconds={25}
+          currentQuestion={currentQuestion}
+          onTimeEnd={handleSkip}
+        />
 
         {questions.map((question) => {
           if (question.id === currentQuestion.id) {
