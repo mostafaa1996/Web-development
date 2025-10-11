@@ -9,7 +9,7 @@ export default function ConfirmButton({ handleConfirm, decision }) {
     <div className="h-10 w-[40%] rounded-full">
       <button
         className={ButtonCssClasses}
-        onClick={()=>handleConfirm(decision.answer)}
+        onClick={() => handleConfirm(decision.answer)}
         disabled={!decision.hasAchoiceBeenSelected}
       >
         Confirm

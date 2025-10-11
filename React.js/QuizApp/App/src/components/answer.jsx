@@ -1,6 +1,5 @@
 export default function Answer({ choice, decision, handleChoiceSelection }) {
-  let choiceFramCssClasses =
-    `w-full h-auto rounded-full  ${decision.answer === choice ? "bg-[#E781FB] hover:bg-[#E781FB]" : "bg-[#87CEEB] hover:bg-[#87CEAB]"}`;
+  let choiceFramCssClasses = `w-full h-auto rounded-full  ${decision.answer === choice ? "bg-[#E781FB] hover:bg-[#E781FB]" : "bg-[#87CEEB] hover:bg-[#87CEAB]"}`;
 
   return (
     <>
