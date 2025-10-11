@@ -12,18 +12,14 @@ export function AnswersProvider({ children }) {
   function SetAnswer(answer) {
     setAnswers([...answers, answer]);
   }
-  function ReadAnswer(index) {
-    return answers[index];
-  }
+
   function SetSkipped(SkippedQuestion) {
     setSkippedQuestions([...skippedQuestions, SkippedQuestion]);
   }
-  function ReadSkipped(index) {
-    return skippedQuestions[index];
-  }
+
   return (
     <AnswersContext.Provider
-      value={{ SetAnswer, ReadAnswer, SetSkipped, ReadSkipped , answers , skippedQuestions}}
+      value={{ SetAnswer, SetSkipped, answers, skippedQuestions }}
     >
       {children}
     </AnswersContext.Provider>
