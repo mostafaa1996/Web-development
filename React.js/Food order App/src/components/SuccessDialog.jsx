@@ -1,9 +1,9 @@
-import { useContext, useImperativeHandle, useRef , forwardRef} from "react";
+import { useContext, useImperativeHandle, useRef, forwardRef } from "react";
 import useSubmit from "../hooks/useSubmit";
 import { useOrderList } from "../orderListProvider";
-const SuccessDialog = forwardRef( function SuccessDialog(props, ref) {
+const SuccessDialog = forwardRef(function SuccessDialog(props, ref) {
   const SuccessDialogRef = useRef();
-  const { FullInfoFororder } = useOrderList();
+  const { FullInfoFororder, Reset } = useOrderList();
   useSubmit();
   useImperativeHandle(ref, () => ({
     openDig: () => {
@@ -13,6 +13,11 @@ const SuccessDialog = forwardRef( function SuccessDialog(props, ref) {
       SuccessDialogRef.current.close();
     },
   }));
+
+  function close() {
+    Reset();
+    SuccessDialogRef.current.close();
+  }
 
   return (
     <dialog
@@ -29,7 +34,7 @@ const SuccessDialog = forwardRef( function SuccessDialog(props, ref) {
         <div className="flex flex-col w-full ">
           <p className="text-base font-bold text-stone-900">Order Details:</p>
           <ul>
-            {FullInfoFororder.order?.map((order) => (
+            {FullInfoFororder.items?.map((order) => (
               <li key={order.id}>
                 {order.name} - {order.price}$
               </li>
@@ -48,10 +53,7 @@ const SuccessDialog = forwardRef( function SuccessDialog(props, ref) {
       <p className="text-base text-stone-900">Thank you for your order!</p>
       <button
         className="bg-yellow-400 px-5 py-2 rounded-md mt-2 text-[#110F0D] mb-2"
-        onClick={() => {
-            console.log(SuccessDialogRef.current);
-            SuccessDialogRef.current?.close()
-        }}
+        onClick={() => close()}
       >
         Close
       </button>

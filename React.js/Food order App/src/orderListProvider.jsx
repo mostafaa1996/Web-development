@@ -35,6 +35,13 @@ export default function OrderListProvider({ children }) {
     setCartCount(cartCount + 1);
   }
 
+  const Reset = () => {
+    setOrderList([]);
+    setCartCount(0);
+    setCustomer({});
+    setFullInfoFororder({});
+  }
+
   return (
     <OrderListContext.Provider
       value={{
@@ -46,7 +53,8 @@ export default function OrderListProvider({ children }) {
         cartCount,
         handleCartCount,
         FullInfoFororder,
-        setFullInfoFororder
+        setFullInfoFororder,
+        Reset
       }}
     >
       {children}
