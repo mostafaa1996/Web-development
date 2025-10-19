@@ -1,7 +1,21 @@
 import { createPortal } from "react-dom";
 import { useImperativeHandle, useRef } from "react";
-export default function OrderList({ orders, ref }) {
+import { useOrderList } from "../orderListProvider";
+
+
+export default function OrderList({ orders, ref , SubmitFormRef}) {
   const DialogRef = useRef();
+  const { removeOrderFromList, addOrderToList } = useOrderList();
+  const handleIncrementQuantity = (order) => {
+    addOrderToList(order);
+  };
+  const handledecrementQuantity = (order) => {
+    removeOrderFromList(order.id);
+  };
+  const openSubmitForm = () => {
+    SubmitFormRef.current.open(); 
+  };
+
   useImperativeHandle(ref, () => ({
     open: () => {
       DialogRef.current.showModal();
@@ -10,6 +24,7 @@ export default function OrderList({ orders, ref }) {
       DialogRef.current.close();
     },
   }));
+
   return createPortal(
     <dialog
       ref={DialogRef}
@@ -22,12 +37,13 @@ export default function OrderList({ orders, ref }) {
             <li key={order.id} className="mb-2">
               <div className="flex flex-row justify-between items-center">
                 <p className="text-sm text-stone-600">
-                  {order.name} - {order.quantity} x ${order.price.toFixed(2)}
+                  {order.name} - {order.quantity} x $
+                  {Number(order.price).toFixed(2)}
                 </p>
                 <div className="flex flex-row gap-2 mr-2">
                   <button
+                    formAction={() => handledecrementQuantity(order)}
                     className="rounded-full bg-[#110F0D] w-[1.5rem] h-[1.5rem] text-center text-yellow-400"
-                    onClick={() => {}}
                   >
                     -
                   </button>
@@ -35,8 +51,8 @@ export default function OrderList({ orders, ref }) {
                     {order.quantity}
                   </span>
                   <button
+                    formAction={() => handleIncrementQuantity(order)}
                     className="rounded-full bg-[#110F0D] w-[1.5rem] h-[1.5rem] text-center text-yellow-400"
-                    onClick={() => {}}
                   >
                     +
                   </button>
@@ -58,14 +74,14 @@ export default function OrderList({ orders, ref }) {
 
         <div className="flex flex-row gap-2 items-center justify-end">
           <button
+            formAction={() => ref.current.close()}
             className="bg-yellow-400 px-5 py-2 rounded-md mt-2 text-[#110F0D] mb-2"
-            onClick={() => {}}
           >
             Cancel
           </button>
           <button
             className="bg-yellow-400 px-5 py-2 rounded-md mt-2 text-[#110F0D] mb-2"
-            onClick={() => {}}
+            formAction={() => {openSubmitForm(); ref.current.close();}}
           >
             GO TO Checkout
           </button>

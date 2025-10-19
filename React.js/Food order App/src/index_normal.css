@@ -14,6 +14,14 @@ body {
   min-height: 100vh;
 }
 
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+dialog:not([open]) {
+  display: none;
+}
+
 #main-header {
   display: flex;
   justify-content: space-between;
