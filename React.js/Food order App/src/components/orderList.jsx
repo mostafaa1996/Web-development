@@ -3,9 +3,9 @@ import { useImperativeHandle, useRef } from "react";
 import { useOrderList } from "../orderListProvider";
 
 
-export default function OrderList({ orders, ref , SubmitFormRef}) {
+export default function OrderList({ref , SubmitFormRef}) {
   const DialogRef = useRef();
-  const { removeOrderFromList, addOrderToList } = useOrderList();
+  const { removeOrderFromList, addOrderToList , orderList } = useOrderList();
   const handleIncrementQuantity = (order) => {
     addOrderToList(order);
   };
@@ -33,7 +33,7 @@ export default function OrderList({ orders, ref , SubmitFormRef}) {
       <h2 className="text-xl md:text-2xl font-bold my-2">Your Cart</h2>
       <form action="" className="flex flex-col gap-2">
         <ul>
-          {orders.map((order) => (
+          {orderList.map((order) => (
             <li key={order.id} className="mb-2">
               <div className="flex flex-row justify-between items-center">
                 <p className="text-sm text-stone-600">
@@ -65,7 +65,7 @@ export default function OrderList({ orders, ref , SubmitFormRef}) {
         <div className="flex flex-row justify-end">
           <p className="text-base font-bold text-stone-600 justify-end">
             Total: $
-            {orders.reduce(
+            {orderList.reduce(
               (acc, order) => acc + order.price * order.quantity,
               0
             )}
