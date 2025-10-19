@@ -1,17 +1,16 @@
 import { useEffect } from "react";
 import { useOrderList } from "../orderListProvider";
 export default function useSubmit() {
-  const { customer, setFullInfoFororder, orderList, FullInfoFororder } =
-    useOrderList();
+  const { customer, setFullInfoFororder, orderList, FullInfoFororder } = useOrderList();
 
   useEffect(() => {
-    if (customer.fullName !== null) {
+    if (customer.fullName) {
       setFullInfoFororder({
         items: orderList,
         customer: customer,
       });
     }
-  }, [customer]);
+  }, [customer, orderList , setFullInfoFororder]);
 
   useEffect(() => {
     async function submitOrder(order) {

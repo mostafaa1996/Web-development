@@ -3,27 +3,27 @@ import Header from "./components/Header.jsx";
 import ItemsDistributer from "./components/ItemsDistributer.jsx";
 import OrderList from "./components/orderList.jsx";
 import SubmitForm from "./components/SubmitForm.jsx";
-import { useOrderList } from "./orderListProvider.jsx";
 import SuccessDialog from "./components/SuccessDialog.jsx";
-
 
 function App() {
   const orderListDialogRef = useRef();
   const SubmitFormRef = useRef();
   const SuccessDialogRef = useRef();
-  const { orderList } = useOrderList();
 
   return (
     <>
-      <Header TextOfLogo={"ReactFood"} ImageOfLogo={"logo.jpg"} OrderListDialogRef={orderListDialogRef}/>
+      <Header
+        TextOfLogo={"ReactFood"}
+        ImageOfLogo={"logo.jpg"}
+        OrderListDialogRef={orderListDialogRef}
+      />
       <div className="flex flex-col gap-2 w-full justify-center items-center">
         <ItemsDistributer />
       </div>
-      <OrderList  orders={orderList} ref={orderListDialogRef} SubmitFormRef={SubmitFormRef}/>
+      <OrderList ref={orderListDialogRef} SubmitFormRef={SubmitFormRef} />
       <SubmitForm ref={SubmitFormRef} successDialogRef={SuccessDialogRef} />
       <SuccessDialog ref={SuccessDialogRef} />
     </>
-    
   );
 }
 

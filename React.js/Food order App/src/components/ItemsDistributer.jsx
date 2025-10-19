@@ -16,7 +16,7 @@ export default function ItemsDistributer() {
     return <Error error="Can`t get the Meals. please try again later" />;
 
   return (
-    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 w-[70%] gap-4 mt-10 mb-10">
+    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 w-[70%] gap-6 mt-10 mb-10 justify-items-center">
       {Meals.map((item) => (
         <Cart
           key={item.id}
