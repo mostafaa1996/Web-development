@@ -1,0 +1,21 @@
+[
+  {
+    "items": [
+      { "id": "m1", "name": "Mac & Cheese", "price": "8.99", "quantity": 1 },
+      {
+        "id": "m2",
+        "name": "Margherita Pizza",
+        "price": "12.99",
+        "quantity": 1
+      }
+    ],
+    "customer": {
+      "fullName": "P192 mostafa hamdy abdel razak",
+      "email": "mostafahamdy199617@gmail.com",
+      "address": "15,zohour Street, El Mandara, Alexandria",
+      "city": "Alexandria",
+      "phone": "01282202531"
+    },
+    "id": "567.3513192782563"
+  }
+]
