@@ -2,8 +2,19 @@ import { getMeal } from "@/lib/meal";
 import classes from "./page.module.css";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-export default function MealDetailsPage({ params }) {
-    const meal =  getMeal(params.slug);
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const meal =  getMeal(slug);
+  if(!meal) notFound();
+  return {
+    title: meal.title + ' details',
+    description: "Delicious meals, shared by a food-loving community.",
+  }
+}
+export default async function MealDetailsPage({ params }) {
+    const { slug } = await params;
+    const meal =  getMeal(slug);
     if(!meal) notFound();
     meal.instructions = meal.instructions.replace(/\n/g, '<br>');
     return <>
