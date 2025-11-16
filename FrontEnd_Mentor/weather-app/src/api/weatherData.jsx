@@ -63,12 +63,19 @@ weatherData = {
     t_max: data.daily.temperatureMax[i],
     weatherCode:{ label: "", icon: "" },
    }, ......] ,
-  hourly: [
-    {
+  hourly:{ 
+   Sunday: [{
       time: data.hourly.time[i],
       temperature: data.hourly.temperature[i],
       weatherCode: { label: "", icon: "" },
     }, ......],
+    Monday: [...],
+    Tuesday: [...],
+    Wednesday: [...],
+    Thursday: [...],
+    Friday: [...],
+    Saturday: [...],
+  }
 }
 
 */

@@ -6,7 +6,6 @@ import DailyForecastContainer from "./components/DailyForecast_container.jsx";
 import HourlyForcastContainer from "./components/HourlyForcast_container.jsx";
 import SearchBar from "./components/SearchBar.jsx";
 import fetchWeatherData from "./api/weatherData.jsx";
-import { weatherCodeMap } from "./api/WeatherDataTransformation";
 
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";

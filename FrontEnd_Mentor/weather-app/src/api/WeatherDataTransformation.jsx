@@ -33,16 +33,16 @@ export const weatherCodeMap = {
 };
 
 let dailyWeather = [
-  { day: "Mon", t_min: 0, t_max: 0 , weatherState: { label: "", icon: "" }},
-  { day: "Tue", t_min: 0, t_max: 0 , weatherState: { label: "", icon: "" }},
-  { day: "Wed", t_min: 0, t_max: 0 , weatherState: { label: "", icon: "" }},
-  { day: "Thu", t_min: 0, t_max: 0 , weatherState: { label: "", icon: "" }},
-  { day: "Fri", t_min: 0, t_max: 0 , weatherState: { label: "", icon: "" }},
-  { day: "Sat", t_min: 0, t_max: 0 , weatherState: { label: "", icon: "" }},
-  { day: "Sun", t_min: 0, t_max: 0 , weatherState: { label: "", icon: "" }},
+  { day: "Mon", t_min: 0, t_max: 0, weatherState: { label: "", icon: "" } },
+  { day: "Tue", t_min: 0, t_max: 0, weatherState: { label: "", icon: "" } },
+  { day: "Wed", t_min: 0, t_max: 0, weatherState: { label: "", icon: "" } },
+  { day: "Thu", t_min: 0, t_max: 0, weatherState: { label: "", icon: "" } },
+  { day: "Fri", t_min: 0, t_max: 0, weatherState: { label: "", icon: "" } },
+  { day: "Sat", t_min: 0, t_max: 0, weatherState: { label: "", icon: "" } },
+  { day: "Sun", t_min: 0, t_max: 0, weatherState: { label: "", icon: "" } },
 ];
 
-let hourlyWeather = [];
+let hourlyWeather = {};
 let currentWeather = {};
 
 export function DataTransformation({ data }) {
@@ -52,13 +52,24 @@ export function DataTransformation({ data }) {
     day.weatherState = weatherCodeMap[data.daily.weatherCode[i]];
   });
 
-  for (let i = 0; i < data.hourly.time.length; i++) {
-    let HourlyObj = {
-      time: data.hourly.time[i],
-      temperature: data.hourly.temperature[i],
-      weatherCode: weatherCodeMap[data.hourly.weatherCode[i]],
-    };
-    hourlyWeather.push(HourlyObj);
+  let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  let HoursOffset = 0;
+  console.log(data.hourly.time.length);
+  if (data.hourly.time.length === 7 * 24) {
+    for (let day = 0; day < 7; day++) {
+      const Startday = new Date(data.hourly.time[HoursOffset]).getDay();
+      hourlyWeather[days[Startday]] = [];
+      for (let i = HoursOffset; i < HoursOffset + 24; i++) {
+        let HourlyObj = {
+          time: data.hourly.time[i],
+          temperature: data.hourly.temperature[i],
+          weatherCode: weatherCodeMap[data.hourly.weatherCode[i]],
+        };
+        hourlyWeather[days[Startday]].push(HourlyObj);
+      }
+      HoursOffset += 24;
+    }
+    console.log(hourlyWeather);
   }
 
   const AverageApparentTemperature =
