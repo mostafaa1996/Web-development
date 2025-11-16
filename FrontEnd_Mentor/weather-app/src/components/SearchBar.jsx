@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { useCityContext } from "../CityInfoContext";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence } from "framer-motion";
 
@@ -7,12 +6,11 @@ import fetchCities from "../api/Cities";
 import SearchInProgress from "./SearchInProgress";
 import SearchMenu from "./SearchMenu";
 
-export default function SearchBar() {
+export default function SearchBar({ setCityInfoFN }) {
   const inputRef = useRef(null);
   const timerRef = useRef(null);
   const [showMenu, setShowMenu] = useState(true);
   const queryClient = useQueryClient();
-  const { setCityInfo } = useCityContext();
   const [search, setSearch] = useState("");
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["cities"],
@@ -21,12 +19,17 @@ export default function SearchBar() {
   });
   function handleSearchButtonClick() {
     const city = inputRef.current.value.split(",")[0].trim();
-    setCityInfo(city);
+    const completeDataOfCity = data.find((item) => item.name === city);
+    console.log(completeDataOfCity);
+    setCityInfoFN(completeDataOfCity);
   }
   function handleMenuClick(city) {
     inputRef.current.value = city.name + ", " + city.country;
     queryClient.removeQueries(["cities"]);
     setShowMenu(false);
+    // new Promise((resolve) => setTimeout(resolve, 3000)).then(() => {
+    //   console.log(data);
+    // })
   }
   function handleChangeInSearch() {
     //debouncing wait until 500ms after last change

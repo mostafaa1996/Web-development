@@ -1,4 +1,6 @@
-export default async function fetchWeatherData({locationData}) {
+import { DataTransformation } from "./WeatherDataTransformation";
+
+export default async function fetchWeatherData({ locationData }) {
   const res = await fetch(`https://api.open-meteo.com/v1/forecast?
 latitude=${locationData.latitude}
 &longitude=${locationData.longitude}
@@ -11,11 +13,9 @@ latitude=${locationData.latitude}
   const weatherData = {
     current: {
       temperature: Data?.current_weather?.temperature,
-      apparentTemperature: Data?.current_weather?.apparent_temperature,
-      relativeHumidity: Data?.current_weather?.relativehumidity_2m,
-      precipitation: Data?.current_weather?.precipitation,
       windSpeed: Data?.current_weather?.windspeed,
       is_day: Data?.current_weather?.is_day,
+      time: Data?.current_weather?.time,
       city: locationData.name,
       country: locationData.country,
     },
@@ -29,7 +29,47 @@ latitude=${locationData.latitude}
       temperature: Data?.hourly?.temperature_2m,
       time: Data?.hourly?.time,
       weatherCode: Data?.hourly?.weathercode,
+      relativeHumidity: Data?.hourly?.relativehumidity_2m,
+      apparentTemperature: Data?.hourly?.apparent_temperature,
+      precipitation: Data?.hourly?.precipitation,
     },
-  }
-  return weatherData;
+  };
+  const WeatherDataObj = DataTransformation({ data: weatherData });
+
+  // console.log(WeatherDataObj);
+
+  return WeatherDataObj;
 }
+
+
+
+/*
+weatherData = {
+  current: {
+    temperature: data.current.temperature,
+    windSpeed: data.current.windSpeed,
+    is_day: data.current.is_day,
+    time: data.current.time,
+    city: data.current.city,
+    country: data.current.country,
+    apparentTemperature: AverageApparentTemperature,
+    relativeHumidity: AverageHumidity,
+    precipitation: AveragePericipitation,
+  },
+  daily:[
+   {
+    time: data.daily.time[i],
+    t_min: data.daily.temperatureMin[i],
+    t_max: data.daily.temperatureMax[i],
+    weatherCode:{ label: "", icon: "" },
+   }, ......] ,
+  hourly: [
+    {
+      time: data.hourly.time[i],
+      temperature: data.hourly.temperature[i],
+      weatherCode: { label: "", icon: "" },
+    }, ......],
+}
+
+*/
+

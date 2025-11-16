@@ -9,7 +9,7 @@ export default function SearchMenu({ data, onSelect }) {
         }}
         className="px-4 py-2 hover:bg-neutral-600 cursor-pointer text-white text-l rounded-lg whitespace-nowrap"
       >
-        <p>{city.name} , {city.country}</p>
+        <p>{city.name}, {city.country}</p>
       </li>
     ))}
   </ul>);

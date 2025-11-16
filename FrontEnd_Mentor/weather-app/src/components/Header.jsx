@@ -6,7 +6,7 @@ export default function Header() {
           <img src="src/assets/images/Logo.svg" alt="the weather app logo" />
           <ToggleUnits/>
       </section>
-      <section className="text-center w-full py-4">
+      <section className="text-center w-full py-2">
         <h1 className="text-5xl text-white ">How&apos;s the sky looking today?</h1>
       </section>
     </header>
