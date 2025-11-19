@@ -1,4 +1,3 @@
-import { tr } from "framer-motion/client";
 import SmallHourlyForcastContainer from "./SmallHourlyForcast_container";
 import {Day_Menu} from "./day_Menu";
 import { useState , useRef } from "react";

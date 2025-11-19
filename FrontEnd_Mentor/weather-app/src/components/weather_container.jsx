@@ -19,7 +19,7 @@ export default function WeatherContainer({
         alt="weather background"
         className="absolute inset-0 w-full h-full object-cover opacity-100"
       />
-      <div className="flex flex-row items-center justify-between relative z-10 text-white my-12">
+      <div className="flex flex-row items-center justify-between relative z-50 text-white my-12">
         <div className="flex flex-col items-start justify-start gap-2">
           <h2 className="text-3xl font-bold">
             {city &&  `${city}, ${country}`}
