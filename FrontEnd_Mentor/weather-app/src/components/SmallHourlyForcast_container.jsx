@@ -1,8 +1,10 @@
+import { useImperialUnitsContext } from "../ImperialUnitsContext";
 export default function SmallHourlyForcastContainer({
   weatherState,
   time,
   Temperature,
 }) {
+  const { imperialUnits } = useImperialUnitsContext();
   const date = new Date(time);
 
   const formattedTime = date.toLocaleTimeString("en-US", {
@@ -20,8 +22,8 @@ export default function SmallHourlyForcastContainer({
         />
         <p className="whitespace-nowrap text-l w-auto">{formattedTime}</p>
       </div>
-      <p className="text-l w-[10%] m-2">
-        {Temperature ? `${Temperature}°` : ""}
+      <p className="text-l w-[10%] m-4">
+        {Temperature ? `${Temperature}${imperialUnits ? "°F" : "°C"}` : ""}
       </p>
     </div>
   );

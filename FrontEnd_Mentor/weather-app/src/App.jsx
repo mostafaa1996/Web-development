@@ -6,10 +6,12 @@ import DailyForecastContainer from "./components/DailyForecast_container.jsx";
 import HourlyForcastContainer from "./components/HourlyForcast_container.jsx";
 import SearchBar from "./components/SearchBar.jsx";
 import fetchWeatherData from "./api/weatherData.jsx";
+import { useImperialUnitsContext } from "./ImperialUnitsContext";
 
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 function App() {
+  const { imperialUnits} = useImperialUnitsContext();
   const [cityInfo, setCityInfo] = useState({
     name: "Cairo",
     country: "Egypt",
@@ -17,9 +19,9 @@ function App() {
     longitude: 31.2357,
   });
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["weather"],
+    queryKey: ["weather" , cityInfo , imperialUnits],
     queryFn: () => {
-      return fetchWeatherData({ locationData: cityInfo });
+      return fetchWeatherData({ locationData: cityInfo , isImperial: imperialUnits });
     },
   });
 
@@ -44,7 +46,7 @@ function App() {
               <WeatherStatusContainer
                 Text="Feels like"
                 Value={data?.current.apparentTemperature}
-                unit="°C"
+                unit={`${imperialUnits ? "°F" : "°C"}`}
               />
               <WeatherStatusContainer
                 Text="Humidity"
@@ -54,12 +56,12 @@ function App() {
               <WeatherStatusContainer
                 Text="Wind"
                 Value={data?.current.windSpeed}
-                unit="m/s"
+                unit={`${imperialUnits ? "mph" : "kmh"}`}
               />
               <WeatherStatusContainer
                 Text="Percipitation"
                 Value={data?.current.precipitation}
-                unit="mm"
+                unit={`${imperialUnits ? "inch" : "mm"}`}
               />
             </div>
             <h2 className="text-xl font-bold mx-1 text-white justify-self-start">

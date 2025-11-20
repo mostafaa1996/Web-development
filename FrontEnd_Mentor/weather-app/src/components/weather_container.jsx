@@ -1,3 +1,4 @@
+import { useImperialUnitsContext } from "../ImperialUnitsContext";
 export default function WeatherContainer({
   city = "",
   country,
@@ -5,6 +6,7 @@ export default function WeatherContainer({
   date,
   is_day,
 }) {
+  const { imperialUnits } = useImperialUnitsContext();
   const dateObj = new Date(date);
   const formattedDate = dateObj.toLocaleDateString("en-US", {
     weekday: "long",
@@ -40,7 +42,7 @@ export default function WeatherContainer({
               className="w-20 h-20"
             />
           ) : ""} 
-          <p className="text-6xl">{city && `${temperature}°`}</p>
+          <p className="text-6xl">{city && `${temperature} ${imperialUnits ? "°F" : "°C"}`}</p>
         </div>
       </div>
     </div>

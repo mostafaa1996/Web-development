@@ -1,13 +1,21 @@
 import { DataTransformation } from "./WeatherDataTransformation";
 
-export default async function fetchWeatherData({ locationData }) {
+
+export default async function fetchWeatherData({ locationData , isImperial }) {
+  const temperatureUnit = isImperial ? "fahrenheit" : "celsius";
+  const windspeedUnit = isImperial ? "mph" : "kmh";
+  const precipitationUnit = isImperial ? "inch" : "mm";
   const res = await fetch(`https://api.open-meteo.com/v1/forecast?
 latitude=${locationData.latitude}
 &longitude=${locationData.longitude}
 &current_weather=true
 &hourly=temperature_2m,apparent_temperature,relativehumidity_2m,precipitation,weathercode
 &daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode
-&timezone=auto`);
+&timezone=auto
+&temperature_unit=${temperatureUnit}
+&windspeed_unit=${windspeedUnit}
+&precipitation_unit=${precipitationUnit}
+`);
   if (!res.ok) throw new Error("Weather data not found");
   const Data = await res.json();
   const weatherData = {

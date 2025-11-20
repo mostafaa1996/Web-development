@@ -1,9 +1,11 @@
+import { useImperialUnitsContext } from "../ImperialUnitsContext";
 export default function DailyForecastContainer({
   Day,
   T_min,
   T_max,
   weatherState,
 }) {
+  const { imperialUnits } = useImperialUnitsContext();
   return (
     <div className="flex flex-col items-center justify-center my-4 w-[11%] h-auto bg-[#25253F] rounded-xl text-white">
       <p className="text-l p-2">{Day ? Day : ""}</p>
@@ -13,8 +15,8 @@ export default function DailyForecastContainer({
         alt={weatherState?.label || null}
       />
       <div className="flex flex-row justify-between px-1 w-full">
-        <p className="text-l p-2">{T_min ? `${T_min}°` : ""}</p>
-        <p className="text-l p-2">{T_max ? `${T_max}°` : ""}</p>
+        <p className="text-l p-1">{T_min ? `${T_min}${imperialUnits ? "°F" : "°C"}` : ""}</p>
+        <p className="text-l p-1">{T_max ? `${T_max}${imperialUnits ? "°F" : "°C"}` : ""}</p>
       </div>
     </div>
   );
